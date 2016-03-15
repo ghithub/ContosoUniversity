@@ -1,0 +1,30 @@
+﻿@model ContosoUniversity.ViewModels.DetailsViewModel
+
+<h2>@Model.Title</h2>
+
+<dt>@Html.DisplayNameFor(m=>m.Student.LastName)
+</dt>
+<dd>@Html.DisplayFor(m=>m.Student.LastName)
+</dd>
+
+<dt>@Html.DisplayNameFor(m=>m.Student.Enrollments)
+</dt>
+
+<table class="table">
+    <tr>
+        <th>Course Title
+        </th>
+        <th>Grade
+        </th>
+    </tr>
+    @foreach(var item in Model.Student.Enrollments)
+    {
+         <tr>
+             <td>@Html.DisplayFor(m=>item.Course.Title)
+             </td>
+             <td>@Html.DisplayFor(m=>item.Grade)
+             </td>
+         </tr>
+    }
+
+</table>
