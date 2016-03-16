@@ -42,11 +42,11 @@ namespace ContosoUniversity.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LastName, FirstMidName, EnrollmentDate")]Student student)
+        public ActionResult Create(CreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                CreateViewModel vm = new CreateViewModel(student.LastName, student.FirstMidName, student.EnrollmentDate);
+                CreateViewModel vm = new CreateViewModel(viewModel.Student.LastName, viewModel.Student.FirstMidName, viewModel.Student.EnrollmentDate);
                 if (vm.SaveStudent() > 0)
                 {
                     return RedirectToAction("Index");
@@ -54,11 +54,11 @@ namespace ContosoUniversity.Controllers {
                 else
                 {
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-                    return View(student);
+                    return View(viewModel);
                 }
             }
 
-            return View(student);
+            return View(viewModel);
         }
 
     }
