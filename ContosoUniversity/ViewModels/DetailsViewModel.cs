@@ -12,7 +12,7 @@ namespace ContosoUniversity.ViewModels
     {
         private SchoolContext db = new SchoolContext();
         public Student Student { get; set; }
-        public string Title = "Details";
+        public string Title = "The Details";
 
         public DetailsViewModel(int? id)
         {

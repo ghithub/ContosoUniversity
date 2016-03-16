@@ -34,25 +34,30 @@ namespace ContosoUniversity.Controllers {
             return View(vm);
         }
 
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View(new CreateViewModel());
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "LastName, FirstMidName, EnrollmentDate")]Student student)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                CreateViewModel vm = new CreateViewModel(student.LastName, student.FirstMidName, student.EnrollmentDate);
+                if (vm.SaveStudent() > 0)
                 {
-                    //Modify: Have the view model do the save.
-                    //db.Students.Add(student);
-                    //db.SaveChanges();
                     return RedirectToAction("Index");
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                    return View(student);
+                }
             }
-            catch (DataException /* dex */)
-            {
-                //Log the error (uncomment dex variable name and add a line here to write a log.
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-            }
+
             return View(student);
         }
 
