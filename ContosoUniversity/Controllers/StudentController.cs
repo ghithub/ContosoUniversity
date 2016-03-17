@@ -67,5 +67,24 @@ namespace ContosoUniversity.Controllers {
             return View(new EditViewModel(id));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EditViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                EditViewModel evm = new EditViewModel();
+                if (evm.UpdateStudent(vm.Student) > 0)
+                {
+                    return RedirectToAction("Details", "Student", new { id = vm.Student.ID });
+                }
+                else
+                {
+                    return View(vm);
+                }
+            }
+
+            return View(vm);
+        }
     }
 }
