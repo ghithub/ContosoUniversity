@@ -21,19 +21,33 @@ namespace ContosoUniversity.ViewModels
         }
 
         public EditViewModel(int? id)
-        {
+        {            
             Student = db.Students.Find(id);
         }
 
-        public int UpdateStudent(Student student)
+        public int Update(Student student)
         {
             try
             {
-                Student old = db.Students.Find(student.ID);
-                old.LastName = student.LastName;
-                old.FirstMidName = student.FirstMidName;
-                old.EnrollmentDate = student.EnrollmentDate;
+                Student  = db.Students.Find(student.ID);
+                Student.LastName = student.LastName;
+                Student.FirstMidName = student.FirstMidName;
+                Student.EnrollmentDate = student.EnrollmentDate;
                 return db.SaveChanges();
+            }
+            catch (DataException de)
+            {
+                //log the exception.
+                return -1;
+            }
+        }
+
+        public int Delete()
+        {
+            try
+            {
+                var removedStudent = db.Students.Remove(Student);
+                return db.SaveChanges();                
             }
             catch (DataException de)
             {

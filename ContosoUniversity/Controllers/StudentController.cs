@@ -64,6 +64,11 @@ namespace ContosoUniversity.Controllers {
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             return View(new EditViewModel(id));
         }
 
@@ -74,7 +79,7 @@ namespace ContosoUniversity.Controllers {
             if (ModelState.IsValid)
             {
                 EditViewModel evm = new EditViewModel();
-                if (evm.UpdateStudent(vm.Student) > 0)
+                if (evm.Update(vm.Student) > 0)
                 {
                     return RedirectToAction("Details", "Student", new { id = vm.Student.ID });
                 }
@@ -85,6 +90,49 @@ namespace ContosoUniversity.Controllers {
             }
 
             return View(vm);
+        }
+
+        // GET: Student/Delete/5
+        public ActionResult Delete(int? id, bool? saveChangesError = false)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
+            }
+
+            DetailsViewModel dvm = new DetailsViewModel(id);
+            
+            if (dvm.Student == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dvm);
+        }
+
+        // POST: Student/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            EditViewModel evm = new EditViewModel(id);
+
+            if (evm.Delete() > 0)
+            {
+                return RedirectToAction("Index", "Student");
+            }
+            else
+            {
+                return View(evm);
+            }
         }
     }
 }
