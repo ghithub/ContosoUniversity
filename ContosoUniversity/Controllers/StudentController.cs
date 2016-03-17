@@ -53,12 +53,18 @@ namespace ContosoUniversity.Controllers {
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                    ModelState.AddModelError("DB Error", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
                     return View(viewModel);
                 }
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            return View(new EditViewModel(id));
         }
 
     }
