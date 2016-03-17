@@ -137,6 +137,12 @@ namespace ContosoUniversity.Controllers {
             {
                 return View(evm);
             }
+
+            //Or do this (does not work).
+
+            //EditViewModel evm = new EditViewModel();
+            //evm.Delete(id);
+            //return RedirectToAction("Index", "Student");
         }
     }
 }

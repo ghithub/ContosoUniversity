@@ -21,7 +21,7 @@ namespace ContosoUniversity.ViewModels
         }
 
         public EditViewModel(int? id)
-        {            
+        {
             Student = db.Students.Find(id);
         }
 
@@ -29,7 +29,7 @@ namespace ContosoUniversity.ViewModels
         {
             try
             {
-                Student  = db.Students.Find(student.ID);
+                Student = db.Students.Find(student.ID);
                 Student.LastName = student.LastName;
                 Student.FirstMidName = student.FirstMidName;
                 Student.EnrollmentDate = student.EnrollmentDate;
@@ -47,13 +47,21 @@ namespace ContosoUniversity.ViewModels
             try
             {
                 var removedStudent = db.Students.Remove(Student);
-                return db.SaveChanges();                
+                return db.SaveChanges();
             }
             catch (DataException de)
             {
                 //log the exception.
                 return -1;
             }
+        }
+
+
+        // The following does not work.
+        public void Delete(int? id)
+        {
+            Student toBeDeleted = new Student { ID = id ?? 0 };
+            db.Entry(toBeDeleted).State = EntityState.Deleted;
         }
     }
 }
