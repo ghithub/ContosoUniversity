@@ -92,7 +92,11 @@ namespace ContosoUniversity.Controllers {
             return View(vm);
         }
 
-        // GET: Student/Delete/5
+        // GET: Student/Delete/5, this get action directs users to the details view where a delete button is provided.
+        //This code accepts an optional parameter that indicates whether the method was called after a failure to save changes. 
+        //This parameter is false when the HttpGet Delete method is called without a previous failure. When it is called by 
+        //the HttpPost Delete method in response to a database update error, the parameter is true and an error message is 
+        //passed to the view.
         public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
@@ -113,7 +117,7 @@ namespace ContosoUniversity.Controllers {
             return View(dvm);
         }
 
-        // POST: Student/Delete/5
+        // POST: Student/Delete/5. This does the actual deletion.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int? id)
