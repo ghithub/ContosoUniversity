@@ -12,8 +12,8 @@ using System.Web.Mvc;
 namespace ContosoUniversity.Controllers {
     public class StudentController : Controller
     {
-        public ActionResult Index() {
-            StudentsViewModel vm = new StudentsViewModel();
+        public ActionResult Index(string sortOrder) {
+            StudentsViewModel vm = new StudentsViewModel(sortOrder);            
             return View(vm);
         }
 
