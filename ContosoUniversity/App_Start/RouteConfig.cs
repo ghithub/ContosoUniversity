@@ -11,6 +11,12 @@ namespace ContosoUniversity {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "IndexWithSort",
+                url: "{controller}/{action}/{sortOrder}",
+                defaults: new {controller = "Student", action="Index", sortOrder = "" }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
