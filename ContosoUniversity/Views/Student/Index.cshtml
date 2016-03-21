@@ -9,14 +9,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Last Name", "Index", new {sortOrder = @Model.NameSortOrder})
-            Last Name
+            @Html.ActionLink("Last Name", "Index", new {sortOrder = @Model.NameSortOrder})            
         </th>
         <th>
             First Name
         </th>
         <th>
-            Enrollment Date
+            @Html.ActionLink("Enrollment Date", "Index", new {sortOrder = @Model.DateSortOrder})
         </th>
         <th></th>
     </tr>
